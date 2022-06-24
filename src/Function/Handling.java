@@ -237,45 +237,13 @@ public class Handling {
         } while (functionChoice > 2 || functionChoice < 1);
 		
         if(functionChoice == 1) {
-        	sortAssignmentsByBusDriverName(ASSIGNMENTS);
-        } else sortAssignmentsByTotalTurns(ASSIGNMENTS);
-        
-		showAssignment(ASSIGNMENTS);
-	}
-
-	
-	private static void sortAssignmentsByBusDriverName(ArrayList<Assignment> assignments) {
-
-		if(!checkData(ASSIGNMENTS)) {
-			System.out.println("Chưa có dữ liệu trong bảng phân công. Vui lòng nhập trước đã!");
-			return;
-		}
-		for(int i=0; i<assignments.size(); i++) {
-			for(int j=i+1; j<assignments.size(); j++) {
-				if(assignments.get(i).getBusDriver().getName().compareTo(assignments.get(j).getBusDriver().getName()) > 0 ) {
-        			Assignment tmp = assignments.get(i); 
-        			assignments.set(i,assignments.get(j)); 
-        			assignments.set(j,tmp);
-        		}
-			}
-		}
-	}
-	
-	private static void sortAssignmentsByTotalTurns(ArrayList<Assignment> assignments) {
-
-		if(!checkData(ASSIGNMENTS)) {
-			System.out.println("Chưa có dữ liệu trong bảng phân công. Vui lòng nhập trước đã!");
-			return;
-		}
-		for(int i=0; i<assignments.size(); i++) {
-			for(int j=i+1; j<assignments.size(); j++) {
-				if(assignments.get(i).getAssignmentDetail().size() <  assignments.get(j).getAssignmentDetail().size()) {
-        			Assignment tmp = assignments.get(i); 
-        			assignments.set(i,assignments.get(j)); 
-        			assignments.set(j,tmp);
-        		}
-			}
-		}
+        	Collections.sort(ASSIGNMENTS, (assignment1, assignment2) 
+            		-> assignment1.getBusDriver().getName().compareTo(assignment2.getBusDriver().getName()));
+        }
+        else Collections.sort(ASSIGNMENTS, (assignment1, assignment2) 
+        		-> Integer.compare(assignment2.getAssignmentDetail().size(), assignment1.getAssignmentDetail().size()));
+		
+        showAssignment(ASSIGNMENTS);
 	}
 
 
